@@ -1,0 +1,104 @@
+/* 登录css */
+
+/* 头部css */
+.w1200{width:1200px;margin:0 auto;}
+#head{height:70px;padding-top:50px;}
+.h_logo a{display:inline-block;padding-right:28px;}
+.h_logo span{font-size:18px;color:#888888;font-weight: bold;}
+.welcome{color:#3fc9aa;margin-right:8px;}
+.cancel{color:#2f85e6;}
+.cancel:hover{color:#2f85e6;}
+
+/* 中间css */
+#content{height:499px;border-bottom:1px solid #dcdcdc;padding-bottom:70px;position:relative;}
+.contentwrap{background:#e20459;}
+.cont{height:500px;background:url(../img/1458612340962728009.jpg) no-repeat;position:relative;}
+.login{position:absolute;right:108px;top:70px;background:#fff;width:300px;}
+.form{padding:20px 32px 10px 32px;}
+.lo_head {padding:20px 0;}
+.lo_head h3{font-size:20px;float:left;}
+.lo_head a{float:right;color:#3894ea;font-size:12px;}
+.tip{color:#ec5151;display:block;position: relative;padding-left:30px;font-weight: normal;font-size: 12px;margin-bottom:5px;display:block;}
+.tip span{display:inline-block;height:16px;width:16px;background:url(../img/login_icons_new.png) no-repeat;margin:0 3px;position: absolute;top:3px;left:5px;}
+.f_name{width:218px;padding:9px 8px;position:relative;border:1px solid #c9c9c9;}
+.f_name i{display:inline-block;width:18px;height:18px;background:url(../img/login_icons_new.png) no-repeat -25px -26px;position:absolute;top:10px;}
+.f_name .text{border:0 none;height:18px;width:197px;margin-left:23px;}
+.f_pwd{width:218px;padding:9px 8px;position:relative;border:1px solid #c9c9c9;margin:20px 0;}
+.f_pwd i{display:inline-block;width:18px;height:18px;background:url(../img/login_icons_new.png) no-repeat -25px -49px;position:absolute;top:11px;}
+.f_pwd .pwd{border:0 none;height:18px;width:197px;margin-left:23px;}
+.f_keep{font-size:12px;height:13px;line-height:13px;position: relative;}
+.box{position: absolute;top:0px;}
+.f_keep span{margin-left:18px;color:#666;}
+.f_go{padding:20px 0;width:234px;overflow:hidden;}
+.f_go a{color:#666;font-size:12px;float:left;margin:10px 0 0 25px;display:block;}
+.submit{width:126px;height:39px;background:#ec5151;color:#fff;line-height:39px;font-size:16px;font-weight:bold;border-radius:5px;border:0 none;float:right;cursor:pointer;}
+.f_other h4{color:#9fa0a0;display:block;font-size:12px;}
+.f_other span{display:block;padding-top:6px;}
+.qq{display:inline-block;height:22px;width:22px;background:url(../img/ecsc_icon.png) no-repeat -307px -308px;margin-right:6px;}
+.sina{display:inline-block;height:22px;width:22px;background:url(../img/ecsc_icon.png) no-repeat -369px -308px;}
+
+/* 底部css */
+#footer{idth:100%;padding-top:40px;text-align:center;}
+.log_f{width:1200px;margin:0 auto;padding:50px 0;}
+.log_f p{line-height:25px;text-align:center;font-size:12px;}
+.log_f a{padding:0 5px;}
+.log_f .footer_from a{color:#ec5351;}
+.footer_img{padding-top:6px;}
+.footer_img a{ display:inline-block;padding:0 5px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

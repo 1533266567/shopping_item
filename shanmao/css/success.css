@@ -1,0 +1,273 @@
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000314}}
+#nav {
+  height: 30px;
+  font-size: 12px;
+  line-height: 30px;
+  background: #efefef;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000320}}
+.navwrap, #head, #content, .footer_desc_copyright {
+  width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000325}}
+.nav_l {
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000330}}
+.nav_l span {
+  color: #333;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000334}}
+.nav_l .user {
+  color: #ec5151;
+  padding: 0 15px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000338}}
+.nav_l .quit {
+  color: #2f85e6;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000341}}
+.nav_r {
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000345}}
+.nav_r ul {
+  overflow: hidden;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000350}}
+.nav_r li {
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000355}}
+.nav_r a {
+  color: #666;
+  padding: 0 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000360}}
+#head {
+  padding: 30px 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000364}}
+.logo {
+  float: left;
+  width: 220px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000369}}
+.logo a {
+  display: block;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000373}}
+.search {
+  position: relative;
+  margin: 10px 0 0 110px;
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000376}}
+.search_form {
+  border: 1px solid #ec5151;
+  width: 458px;
+  height: 35px;
+  line-height: 35px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000379}}
+.s_change {
+  width: 72px;
+  height: 35px;
+  float: left;
+  cursor: pointer;
+  position: relative;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000382}}
+.s_change i {
+  display: inline-block;
+  width: 13px;
+  height: 7px;
+  background: url(../img/ecsc_icon.png) no-repeat -261px -291px;
+  position: absolute;
+  top: 14px;
+  left: 46px;
+}
+
+/* @media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000385}}
+.s_change:hover i {
+  background-position: -277px -291px;
+} */
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000388}}
+.s_change ul {
+  width: 72px;
+  height: 35px;
+  position: absolute;
+  left: -1px;
+  overflow: hidden;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000391}}
+.s_change ul li {
+  padding-left: 16px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000392}}
+.cur {
+  background: #ec5151;
+  color: #fff;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000395}}
+.s_input {
+  width: 315px;
+  height: 21px;
+  float: left;
+  margin: 7px 0;
+  border: 0 none;
+  border-left: 1px solid #e9e9e9;
+  padding: 0 7px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\0000398}}
+.s_btn {
+  width: 56px;
+  height: 35px;
+  background: #ec5151 none repeat scroll 0 0;
+  float: left;
+  position: relative;
+  cursor: pointer;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003101}}
+.s_btn i {
+  display: inline-block;
+  width: 28px;
+  height: 25px;
+  background: url(../img/ecsc_icon.png) no-repeat -25px -8px;
+  position: absolute;
+  top: 7px;
+  left: 14px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003105}}
+#content {
+  margin-bottom: 30px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003109}}
+.con {
+  background: #cdf6c0;
+  border: 1px solid #ec5151;
+  height: 400px;
+  padding: 50px 80px;
+  position: relative;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003116}}
+.suc {
+  font-size: 25px;
+  font-weight: bold;
+  color: #000;
+  display: block;
+  padding: 80px;
+  position: relative;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003125}}
+.suc i {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  background: url(../img/ecsc_icon.png) no-repeat -406px -304px;
+  position: absolute;
+  left: 30px;
+  top: 70px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003132}}
+.con p {
+  text-indent: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ec5151;
+  line-height: 35px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #333;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003144}}
+.con a {
+  display: block;
+  width: 120px;
+  height: 60px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  background: #999;
+  color: #fff;
+  line-height: 60px;
+  text-align: center;
+  font-size: 20px;
+  position: absolute;
+  left: 50%;
+  margin-left: -60px;
+  bottom: 50px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003159}}
+#footer {
+  background: #fff;
+  width: 100%;
+  padding-top: 40px;
+  border-top: 1px solid #dcdcdc;
+  position: relative;
+  text-align: center;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003161}}
+.footer_desc_copyright {
+  padding: 50px 0;
+  color: #666;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003165}}
+.footer_desc_copyright p {
+  line-height: 25px;
+  text-align: center;
+  font-size: 12px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003168}}
+.footer_desc_copyright a {
+  padding: 0 5px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003169}}
+.footer_desc_copyright .footer_from a span {
+  color: #ec5151;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003170}}
+.footer_img {
+  padding-top: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/phpnow\/htdocs\/\%CE\%D2\%B5\%C4\%C9\%C1\%C3\%A8\/sass\/success\.scss}line{font-family:\00003171}}
+.footer_img a {
+  display: inline-block;
+  padding: 0 5px;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闪猫商城-您的一站式购物平台</title>
+	<link rel="icon" type="image/gif" href="img/animated_favicon.gif"/>
+	<link rel="stylesheet" type="text/css" href="css/login.css"/>
+    <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+    <script src="libs/jquery-1.11.3.js"></script>
+     <script src="js/jquery.cookie.js"></script>
+    <script>
+      $(function(){
+          //获得焦点时
+          $('.text').focus(function(){
+          	 $(this).parent().css('border','1px solid #2d9a74');
+          })
+           $('.text').blur(function(){
+          	 $(this).parent().css('border','1px solid #c9c9c9');
+          })
+
+             $('.pwd').focus(function(){
+          	 $(this).parent().css('border','1px solid #2d9a74');
+          })
+           $('.pwd').blur(function(){
+          	 $(this).parent().css('border','1px solid #c9c9c9');
+          })
+         
+         //表单提交事件
+         $('.form').submit(function(){
+            var name = $('.text').val();
+            var pwd = $('.pwd').val();
+         	 if(name.length==0||pwd.length==0){
+         	 	$('.tip').html('<span></span>请输入用户名或密码');
+         	 	$('.tip').find('span').css('backgroundPosition','-3px -3px');
+                return false;
+         	 }else{
+         	 	$.ajax({
+         	 		url:"http://datainfo.duapp.com/shopdata/userinfo.php",
+         	 		type:"POST",
+         	 		data:{
+                       status:"login",
+                       userID:name,
+                       password:pwd
+         	 		},
+         	 success:function(res){
+         	 	 console.log(res);
+                 switch(res){
+                 case '0': $('.tip').html('<span></span>用户名不存在');
+         	 	   $('.tip').find('span').css('backgroundPosition','-3px -3px');
+         	 	    break;
+         	 	 case '2': $('.tip').html('<span></span>用户名或密码错误');
+         	 	   $('.tip').find('span').css('backgroundPosition','-3px -3px');
+         	 	    break;
+                 default: $.cookie('username',name);
+                          window.location.href = "index.html";break;
+                      }
+                   
+         	 	   }
+         	 	})
+
+         	 	return false;
+         	 }
+         	
+         })
+  
+
+
+
+      })
+    </script>
+</head>
+<body>
+	<div id="head">
+       <div class="headwrap w1200">
+         <div class="h_logo">
+            <a href="#"><img src="img/logo_2015.png"/></a>
+            <span>模板堂出品  企业级免费多用户商城系统</span>
+         </div>
+       </div>
+	</div><!-- 头部logo -->
+	<div id="content">
+	  <div class="contentwrap">
+         <div class="cont w1200">
+            <div class="login">
+              <form method="post" class="form">
+               	<div class="lo_head clear">
+                  <h3>欢迎登录</h3>
+                  <a href="register.html">免费注册</a>
+               	</div>
+                <b class="tip"></b>
+                <div class="f_login">
+                  <div class="f_name">
+                    <i></i>
+                    <input type="text" placeholder="用户名/邮箱/手机" class="text"/>
+                  </div>
+                  <div class="f_pwd">
+                    <i></i>
+                    <input type="password" placeholder="密码" class="pwd"/>
+                  </div>
+                  <div class="f_keep">
+                     <input type="checkbox" class="box"/>
+                     <span>请保存我这次的登录信息</span>
+                  </div>
+                  <div class="f_go">
+                     <a href="#">忘记密码？</a>
+                     <input type="submit" value="登 录" class="submit"/>
+                  </div>
+                  <div class="f_other">
+                    <h4>用第三方账号直接登录:</h4>
+                    <span><a href="http://web2.qq.com/" class="qq"></a><a href="https://login.sina.com.cn/signup/signin.php" class="sina"></a></span>
+                  </div>
+                </div>
+              </form>
+            </div><!-- 登录框 -->
+         </div>
+      </div>
+	</div><!-- 中间内容 -->
+	<div id="footer">
+       <div class="log_f">
+         <p>
+             <a href="">首页</a>
+              |
+	         <a href="">隐私保护</a>
+	        |
+	         <a href="">联系我们</a>
+	         |
+	         <a href="">免责保护</a>
+	          |
+	         <a href="">公司简介</a>
+	         |
+	         <a href="">商家入驻</a>
+	          |
+	         <a href="">意见反馈</a>
+         </p>
+          <p>
+             <a href="">模板堂</a>
+	        |
+	         <a href="">ECjia</a>
+	         |
+	         <a href="">ECjia</a>
+	         |
+	         <a href="">电商学院</a>
+	         |
+	         <a href="">ecshop模板堂</a>
+	         |
+	         <a href="">ECjia</a>
+	         |
+	         <a href="">ECjia</a>
+	        |
+             <a href="">大商创</a>
+         </p>
+         <p>ICP备案证书号:<a href="">DSC000001</a></p>
+         <p class="footer_from">Powered by <a href="">大商创1.0</a></p>
+         <p class="footer_img">
+            <a href=""><img src="img/banquan_1.jpg"/></a>
+            <a href=""><img src="img/banquan_2.jpg"/></a>
+            <a href=""><img src="img/banquan_3.jpg"/></a>
+            <a href=""><img src="img/banquan_4.jpg"/></a>
+            <a href=""><img src="img/banquan_5.jpg"/></a>
+         </p>
+      </div>
+	</div><!-- 底部链接 -->
+</body>
+</html>

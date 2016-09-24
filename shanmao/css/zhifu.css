@@ -1,0 +1,170 @@
+/* 导航css */
+#navwrap{height:30px;width:100%;background-color:#efefef;position:relative;line-height:30px;font-size:12px;}
+.nav{width:1200px;margin:0 auto;position:relative;}
+.fl{float:left;}
+.son span{float:left;}
+.send_t{padding:0 25px 0 5px;border:1px solid #efefef;border-bottom:0 none;}
+.send_t i{display:inline-block;margin-left:5px;width:10px;height:10px;background:url(../img/ecsc_icon.png) no-repeat -264px -290px;}
+.hover {background:#fff;border:1px solid #ec5151;}
+.hover i{background:url(../img/ecsc_icon.png) no-repeat -279px -290px;}
+
+/* 选择城市 */
+.sc_icon{background:#fff;border:1px solid #ec5151;display:none;position:absolute;top:29px;left:48px;z-index:9999;}
+.sc_blank{background:#fff;height:10px;width:69px;overflow: hidden;position:absolute;top:-7px;left:0px;}
+.cy_wrap{background:#fff;height:190px;width:301px;padding:20px 15px;}
+.city{overflow: hidden;}
+.city .active{background:#ec5151;color:#fff;}
+.city span{display:block;padding:0 8px;float:left;}
+.city span a{display:block;width:40px;height:24px;text-align:center;line-height:24px;}
+.user_en{float:left;padding-left:40px;}
+.user_en .login{color:#e23435;margin-right:8px;}
+.user_en .regist{color:#666;}
+.welcome{color:#3fc9aa;margin-right:8px;}
+.cancel{color:#2f85e6;}
+.cancel:hover{color:#2f85e6;}
+.moreser{float:right;padding-right:0;}
+.moreser li{float:left;padding:0 10px;}
+ .moreser .spacer{width:1px;height:12px;background:#a8a8a8;margin:9px 2px 0;padding:0;}
+ .act {border:1px solid #efefef;border-bottom:0 none;}
+.act i{display:inline-block;margin-left:4px;width:10px;height:10px;background: url(../img/ecsc_icon.png) no-repeat -264px -290px;}
+.act dd{background:#fff;border:1px solid #ddd;position:absolute;top:30px;right:0px;z-index:9999;}
+.salewrap{width:153px;height:50px;padding:6px 0 11px 16px;display:none;}
+.salewrap span{display:inline-block;padding-right:21px;}
+.sale_blank{background:#fff;height:10px;width:85px;overflow: hidden;position:absolute;top:-7px;left:84px;}
+.sale_hover{background:#fff;border:1px solid #ddd;}
+.shopcar{position:absolute;width:134px;height:40px;background:url(../img/shopcart_2015.png) no-repeat;right:0;}
+.shopcar_con{line-height:40px;padding:0 30px 0 60px;position:relative;}
+.econ_l{display:inline-block;width:23px;height:25px;background:url(../img/ecsc_icon.png) no-repeat -3px -9px;position:absolute;left:20px;top:15px;}
+.econ_t{display:inline-block;width:18px;height:18px;border-radius:10px;text-align:center;line-height:18px;color:#e23435;position:absolute;left:40px;background:#fff;}
+.cf{color:#fff;font-size:14px;}
+.econ_r{display:inline-block;width:18px;height:18px;font:700 13px/13px simsun;position:absolute;right:2px;top:13px;}
+
+/* 头部css */
+.header{width:1200px;margin:0 auto;padding:22px 0;}
+#logo{float: left;width:220px;position: relative;}
+#logo a{display: block;}
+/* 搜索标题css */
+.h_join{width:113px;height:59px;float:left;padding-left:40px;}
+.h_search{position:relative;margin:10px 0 0 110px;float:right;}
+.search_form{border:1px solid #ec5151;width:458px;height:35px;line-height:35px;}
+.s_change{width:72px;height:35px;float:left;cursor:pointer;position:relative;}
+.s_change i{display:inline-block;width:13px;height:7px;background:url(../img/ecsc_icon.png) no-repeat -261px -291px;position:absolute;top:14px;left:46px;}
+.s_change:hover i{background-position:-277px -291px;}
+.s_change ul{width:72px;height:35px;position:absolute;left:-1px;overflow:hidden;}
+.s_change ul li{padding-left:16px;}
+.cur{background:#ec5151;color:#fff;}
+.s_input{width:315px;height:21px;float:left;margin:7px 0;border:0 none;border-left:1px solid #e9e9e9;padding:0 7px;}
+.s_btn{width:56px;height:35px;background:#ec5151 none repeat scroll 0 0 ;float:left;position:relative;cursor:pointer;}
+.s_btn i{display:inline-block;width:28px;height:25px;background:url(../img/ecsc_icon.png) no-repeat -25px -8px;position:absolute;top:7px;left:14px;}
+.s_key{float:left;}
+.s_key li{float:left;font-size:12px;padding-top:6px;}
+.s_key li a{display:inline-block;padding:0 10px;}
+.s_key .spacer{width:1px;height:12px;background:#a8a8a8;margin:10px 2px 0;padding:0;}
+.h_rule{float:left;height:55px;padding:3px 0 0 52px;-webkit-transition:all 0.5s ease-in-out;
+}
+.h_rule a{width:203px;height:55px;display:block;background:url(../img/ecsc_icon.png) no-repeat -393px -1px;}
+.h_rule_back{display:none;}
+
+/* 购物车头部 */
+.contain{width:100%;border-top:1px solid #ec5051;margin-top:20px;position: relative;overflow: hidden;}
+.contain i{cursor: pointer;}
+.contain .click{background:url(../img/checkbox-icon.png) no-repeat 0 0;}
+.con_head{width:1200px;margin:0 auto;padding:20px 0;overflow: hidden;}
+.ch_logo{float: left;position: relative;line-height: 25px;height:25px;}
+.ch_logo em{float: left;display: block;width:23px;height:20px;background:url(../img/ecsc_icon.png) no-repeat -490px -199px;margin-left:5px;}
+.ch_logo span{float: left;margin-left: 20px;font-size:19px;color:#727171;}
+.ch_logo .ch_num{color:#ec5151;}
+.ch_area{float: right;height:25px;line-height:25px;position: relative;color:#666;}
+.ch_w{float: left;padding-right:5px;}
+.song{width:132px;height:25px;float: left;overflow: hidden;position: relative;font-size: 12px;}
+.song_nav{width:90px;height:23px;border:1px solid #cecbce;padding:0 30px 0px 10px;position: relative;}
+.song_nav i{display: inline-block;width:10px;height:6px;background: url(../img/ecsc_icon.png) no-repeat -264px -292px;position: absolute;top:9px;right:8px;}
+
+/* 购物车内容 */
+.con_goods{width:1200px;margin:0 auto;background:#fff;padding-bottom:40px;}
+.goods_t{height:50px;padding:0 27px;overflow: hidden;line-height: 50px;color:#333;position: relative;background:#eeeeee;margin-bottom: 20px;}
+.goods_t ul{overflow: hidden;}
+.goods_t li{float: left;}
+.goods_t .qx{padding:0 80px 0 19px;position: relative;}
+.goods_t .sp{padding-right:270px;}
+.goods_t .sx{padding-right: 175px;}
+.goods_t .dj{padding-right:100px;}
+.goods_t .sl{padding-right:105px;}
+.goods_t .xj{padding-right:75px;}
+.goods_t .cz{padding-right:65px;}
+.check{display: inline-block;height:13px;width:13px;position: absolute;top:18px;left:0px;background:url(../img/checked-icon.png) no-repeat 0 0;}
+.goods_list{position: relative;margin-bottom:20px;}
+.shop{height:27px;position: relative;line-height: 27px;padding-left:50px;}
+.shop i{display: inline-block;height:13px;width:13px;position: absolute;top:7px;left:25px;background:url(../img/checked-icon.png) no-repeat 0 0;}
+.goods_list ul{overflow: hidden;}
+.goods_list li{overflow: hidden;} 
+.goods{border:1px solid #d2d2d2;padding-bottom:20px;height:93px;padding:15px 25px 0 ;position: relative;background:#fff4e8;font-size:12px;color:#666;margin-top:12px;}
+.g_goods{float: left;width:315px;position: relative;padding-left:25px;padding-right: 250px;}
+.goods_meg{width:100%;overflow: hidden;}
+.g_img{float: left;height:80px;border:1px solid #eeeeee;width:80px;margin-right:15px;}
+.g_img a, .g_name a, .g_hand a{display: block;}
+.g_img img{float: left;width:80px;height:80px;}
+.g_name{line-height: 20px;width:auto;height:auto;}
+.g_price{float: left;padding-left:25px;width:120px;font-size: 14px;color:#333;}
+.g_num{width:80px;float: left;text-align: center;}
+.g_suan{width:80px;height:22px;overflow: hidden;position: relative;}
+.prv{display: block;width:24px;height:20px;float: left;border:1px solid #cacbcb;background:#fff;color:#666;line-height:20px;text-align: center;font-weight: bold;}
+.text{display: block;width:24px;height:20px;float: left;border:1px solid #cacbcb;background:#fff;color:#666;line-height:20px;text-align: center;margin-left:-1px;}
+.next{display: block;width:24px;height:20px;float: left;border:1px solid #cacbcb;background:#fff;color:#666;line-height:20px;text-align: center;margin-left:-1px;font-weight: bold;}
+.yh{padding-top:6px;color:#999;}
+.g_sum{padding-left:65px;color:#ec5051;float: left;font-size: 16px;font-weight: bold;}
+.g_hand{float: left;line-height: 22px;width:85px;padding-left:65px;}
+.g_goods i{display: inline-block;height:13px;width:13px;position: absolute;top:0px;left:0;background:url(../img/checked-icon.png) no-repeat 0 0;}
+.con_cart{height:48px;border:1px solid #f0f0f0;line-height: 48px;padding-left:25px;overflow: hidden;font-size: 12px;position: relative;}
+.cart_zz{float: left;padding-left:20px;}
+.cart_zz span{color:#333;float: left;font-weight: bold;}
+.cart_zz ul{float: left;}
+.cart_zz li{float: left;padding-left:28px;}
+.cart_zz li a{color:#727171;}
+.cart_zz i{display: inline-block;height:13px;width:13px;position: absolute;top:17px;left:24px;background:url(../img/checked-icon.png) no-repeat 0 0;}
+.cart_js{float: right;}
+.js, .zj, .zs, .choose{float: right;}
+.js a{display: block;width:114px;height:50px;line-height:50px;text-align: center;color:#fff;background:#ec5151;font-size: 20px;}
+.zj_yf{color:#9fa0a0;}
+.zj{padding-right:16px;}
+.zs{padding-right:34px;}
+.zj .zj_cash{color:#eb4f50;font-size: 16px;font-weight: bold;}
+.zs_yf{color:#9fa0a0;}
+.zj_save{color:#333;}
+.choose span{color:#333;}
+.choose .c_num{color:#ec5151;font-size: 16px;padding:0 3px;}
+.choose{padding-right:46px;}
+
+/* 推荐内容 */
+.con_more{ width:1200px;margin:0 auto;background:#fff;margin-bottom: 10px; }
+.more_nav{height:32px;line-height: 32px;margin-bottom:20px;border-bottom:1px solid #ec5151;}
+.more_nav li{height:31px;padding:0 35px;color:#333;float: left;position: relative;cursor:pointer;border-top:1px solid #dcdcdc;border-left:1px solid #dcdcdc;border-right:1px solid #dcdcdc;margin:0 -1px 0 0;}
+.more_nav .on{height:32px;margin-right:0;color:#ec5151;border:1px solid #ec5151;border-bottom:none;background:#fff;}
+.more_com{padding-bottom: 75px;}
+.c_list{position: relative;width:100%;}
+.c_prev{display:inline-block;width:26px;height:44px;background:#d7d7d7 url(../img/ecsc_icon.png) no-repeat -232px -1px;position: absolute;top:40%;left:0;}
+.c_next{display:inline-block;width:26px;height:44px;background:#d7d7d7 url(../img/ecsc_icon.png) no-repeat -260px -1px;position: absolute;top:40%;right:0;}
+.cl_con{border-right:1px solid #dcdcdc;height:302px;overflow: hidden;position: relative;width:1200px;}
+.cl_wrap{overflow: hidden;position: relative;width:1200px;}
+.cl_wrap ul{position: relative;left:0;top:0;overflow: hidden;margin:0;padding:0;}
+.cl_wrap ul li{border:1px solid #dcdcdc;float: left;width:199px;margin:0 -1px 0 0;}
+.cl_item{float: left;padding:18px 16px;font-size:12px;}
+.cl_img{height:169px;height:169px;margin-bottom:8px;}
+.cl_img img{height:169px;height:169px;float: left;}
+.cl_price{color:#ec5151;font-size: 16px;margin-bottom: 4px;text-align: center;}
+.cl_name{height:36px;line-height: 18px;overflow: hidden;margin-bottom:5px;}
+.cl_name a{color:#727171;}
+.cl_seller{float: left;overflow: hidden;width:85px;}
+.cl_seller a{color:#3178bf;}
+.cl_num{float: right;color:#9fa0a0;}
+
+/* 底部 */
+#footer{background:#fff;width:100%;padding-top:40px;border-top:1px solid #dcdcdc;position:relative;text-align:center;}
+.footer_desc_copyright{width:1200px;margin:0 auto;padding:50px 0;color:#666;}
+.footer_desc_copyright p{line-height:25px;text-align:center;font-size:12px;}
+.footer_desc_copyright a{padding:0 5px;}
+.footer_desc_copyright .footer_from a span{color:#ec5351;}
+.footer_img{padding-top:10px;}
+.footer_img a{ display:inline-block;padding:0 5px;}
+
+

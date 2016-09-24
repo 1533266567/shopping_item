@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>用户中心_注册新用户名</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/register.css" />
+   <link rel="icon" type="image/gif" href="img/animated_favicon.gif"/>
+	<script src="libs/jquery-1.11.3.js"></script>
+	<script>
+        $(function(){
+             //点击切换
+            $('.form_t').find('li').click(function(){
+               $(this).addClass('curr');
+               $(this).siblings().removeClass('curr');
+               $('.form_con').children().eq($(this).index()).show();
+               $('.form_con').children().eq($(this).index()).siblings().hide();
+            })
+          //触发焦点
+          $('.form_con').find('input').focus(function(){
+            $(this).css('border','1px solid #2d9a74');
+          })
+          $('.form_con').find('input').blur(function(){
+            $(this).css('border','1px solid #c9c9c9');
+          })
+ 
+        //验证用户名
+        $('input[name=username]').focus(function(){
+          $(this).siblings('i').css('background-position','-3px -27px');
+        })
+        $('input[name=username]').blur(function(){
+          $(this).siblings('i').css('background-position','-25px -27px');
+          if($(this).val().length!=0 && $(this).val().length>2 && $(this).val().length<14){
+                
+             $(this).siblings('label').html('<i></i>');
+             $(this).siblings('label').find('i').css('background-position','-26px -4px')
+               
+          }else{
+             $(this).siblings('label').html('<i></i>名字不能少于3个字符或大于7个汉字');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }
+          
+        })
+       
+        //验证邮箱
+        var em=/^\w+@\w+(\.\w+)+$/;  //邮箱正则
+       $('input[name=email]').focus(function(){
+          $(this).siblings('i').css('background-position','-53px -5px');
+           if(em.test($(this).val())){
+              $(this).siblings('label').html('<i></i>');
+             $(this).siblings('label').find('i').css('background-position','-26px -4px')
+           }else{
+            $(this).siblings('label').html('请填写正确有效的邮箱地址');
+          }
+        })
+         $('input[name=email]').blur(function(){
+          $(this).siblings('i').css('background-position','-77px -5px');
+          if(em.test($(this).val())){
+             $(this).siblings('label').html('<i></i>');
+             $(this).siblings('label').find('i').css('background-position','-26px -4px')
+               
+          }else if($(this).val().length==0){
+               $(this).siblings('label').html('<i></i>邮箱地址不能为空');
+               $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }else{
+             $(this).siblings('label').html('<i></i>格式错误,请输入正确邮箱');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }
+        })
+    
+        //设置密码
+       $('input[name=password]').focus(function(){
+          $(this).siblings('i').css('background-position','-4px -49px');
+        })
+         $('input[name=password]').blur(function(){
+          $(this).siblings('i').css('background-position','-25px -49px');
+          if($(this).val().length==0){
+             $(this).siblings('label').html('<i></i>请输入密码');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }else if($(this).val().length<6){
+             $(this).siblings('label').html('<i></i>密码长度不能小于6');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }else if($(this).val().length>20){
+             $(this).siblings('label').html('<i></i>密码长度不能大于20');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }else{
+             $(this).siblings('label').html('<i></i>');
+             $(this).siblings('label').find('i').css('background-position','-26px -4px')
+          }
+        })
+
+       //验证密码
+       $('input[name=con_password]').focus(function(){
+          $(this).siblings('i').css('background-position','-4px -49px');
+        })
+         $('input[name=con_password]').blur(function(){
+          $(this).siblings('i').css('background-position','-25px -49px');
+          if($(this).val().length==0){
+             $(this).siblings('label').html('<i></i>验证密码不能为空');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+           }else if($(this).val()== $(this).parent().prev().find('input[name=password]').val()){
+                $(this).siblings('label').html('<i></i>');
+                $(this).siblings('label').find('i').css('background-position','-26px -4px')
+           }else{ 
+             $(this).siblings('label').html('<i></i>两次密码不一致');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+           }
+        })
+
+        //手机号
+        var pnum=/^1[34578]\d{9}$/;
+       $('input[name=phone]').focus(function(){
+          $(this).siblings('i').css('background-position','-55px -23px');
+        })
+         $('input[name=phone]').blur(function(){
+          $(this).siblings('i').css('background-position','-78px -23px');
+          if($(this).val()==0){
+             $(this).siblings('label').html('<i></i>手机不能为空');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }else if(pnum.test($(this).val())){
+              $(this).siblings('label').html('<i></i>');
+             $(this).siblings('label').find('i').css('background-position','-26px -4px')
+          }else{
+             $(this).siblings('label').html('<i></i>请输入正确手机号');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+          }
+        })
+
+         //协议
+        $('.c_box').click(function(){
+            if($(this).attr('value')=='1'){
+              $(this).attr('value','0');
+               $(this).siblings('label').html('<i></i>请接受协议');
+                $(this).siblings('label').find('i').css('background-position','-4px -4px')
+            }else{
+              $(this).attr('value','1');
+              $(this).siblings('label').html('');
+            }
+             
+         })
+
+      //验证码
+        $('input[name=code]').blur(function(){
+            if($(this).val().length==0){
+              $(this).siblings('label').html('<i></i>请输入验证码');
+             $(this).siblings('label').find('i').css('background-position','-4px -4px')
+            }else{
+              $(this).siblings('label').html('<i></i>');
+             $(this).siblings('label').find('i').css('background-position','-26px -4px')
+            }
+        })
+       //提交信息
+       $('.regist').eq(0).click(function(){
+
+          if( $('input[name=username]').val().length==0||$('input[name=password]').val().length==0||$('input[name=email]').val().length==0||$('input[name=con_password]').val().length==0||$('.c_box').attr('value' )=='0'){
+
+               $('input[name=username]').siblings('label').html('<i></i>请输入正确用户名');
+               $('input[name=username]').siblings('label').find('i').css('background-position','-4px -4px');
+
+               $('input[name=password]').siblings('label').html('<i></i>请输入密码');
+              $('input[name=password]').siblings('label').find('i').css('background-position','-4px -4px');
+
+                $('input[name=email]').siblings('label').html('<i></i>请输入邮箱');
+               $('input[name=email]').siblings('label').find('i').css('background-position','-4px -4px');
+
+               $('input[name=con_password]').siblings('label').html('<i></i>请输入验证密码');
+               $('input[name=con_password]').siblings('label').find('i').css('background-position','-4px -4px');
+                return false;
+           }else{
+               var name = $('input[name=username]').val();
+               var pwd =  $('input[name=password]').val();
+               $.ajax({
+                  url:"http://datainfo.duapp.com/shopdata/userinfo.php",
+                  type:"POST",
+                  data:{
+                      status:"register",
+                      userID:name,
+                      password:pwd,
+                  },
+                  success:function(res){
+                     console.log(res);
+                    switch(res){
+
+                        case '0':$('input[name=username]').siblings('label').html('用户名重名');break;
+                        case '1':alert(res);window.location.href="index.html";break;
+                        case '2':$('input[name=username]').siblings('label').html('抱歉！数据库出错');break;
+                    }
+                    
+                  }
+               })
+               return false;
+             }
+         })
+
+         $('.regist').eq(1).click(function(){
+            var ofrom=$(this).parent().parent().parent();//避免同名的父级出现问题
+          if( ofrom.find('input[name=username]').val().length==0||ofrom.find('input[name=password]').val().length==0||ofrom.find('input[name=phone]').val().length==0||ofrom.find('input[name=con_password]').val().length==0||ofrom.find('input[name=code]').val().length==0){
+
+               $('input[name=username]').siblings('label').html('<i></i>请输入正确用户名');
+               $('input[name=username]').siblings('label').find('i').css('background-position','-4px -4px');
+
+               $('input[name=password]').siblings('label').html('<i></i>请输入密码');
+              $('input[name=password]').siblings('label').find('i').css('background-position','-4px -4px');
+
+                $('input[name=phone]').siblings('label').html('<i></i>请输入手机号');
+               $('input[name=phone]').siblings('label').find('i').css('background-position','-4px -4px');
+
+               $('input[name=con_password]').siblings('label').html('<i></i>请输入验证密码');
+               $('input[name=con_password]').siblings('label').find('i').css('background-position','-4px -4px');
+               $('input[name=code]').siblings('label').html('<i></i>请输入验证码');
+               $('input[name=code]').siblings('label').find('i').css('background-position','-4px -4px');
+                return false;
+           }else{
+               var name = $('input[name=username]').val();
+               console.log(name);
+               var pwd =  $('input[name=password]').val();
+               $.ajax({
+                  url:"http://datainfo.duapp.com/shopdata/userinfo.php",
+                  type:"POST",
+                  data:{
+                      status:"register",
+                      userID:name,
+                      passowrd:pwd,
+                  },
+                  success:function(res){
+                    switch(res){
+
+                        case '0':$('input[name=username]').siblings('label').html('用户名重名');break;
+                        case '1':window.location.href="index.html";break;
+                        case '2':$('input[name=username]').siblings('label').html('抱歉！数据库出错');break;
+                    }
+                    
+                  }
+               })
+               return false;
+             }
+         })
+
+         //手机验证码
+         var arr=['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg'];
+        
+        $('.code').click(function(){
+           var n=parseInt(Math.random()*10)+1;
+          // console.log(n);
+          $(this).find('img').attr('src','img/'+arr[n-1]);
+          console.log($(this).find('img').attr('src'))
+        })
+      })
+	</script>
+</head>
+<body>
+	<div id="reg_head">
+      <div class="reg_h">
+          <div class="reg_h_logo">
+            <a href=""><img src="img/logo_2015.png"/></a>
+            <span>模板堂出品 企业级免费多用户商城系统</span>
+          </div>
+          <span class="reg_h_lg">有账号<a href="login.html">在此登录</a></span>
+      </div>
+	</div>
+	<div id="reg_con">
+        <div class="reg_c clear">
+          <div class="reg_c_pic">
+             <a href=""><img src="img/regist-banner.jpg"/></a>
+          </div>
+          <div class="reg_c_reg">
+             <div class="reg_form">
+               <div class="form_t">
+                  <ul class="tab clear">
+                    <li class="curr">邮箱注册</li>
+                    <li>手机注册</li>
+                  </ul>
+               </div> 
+               <div class="form_con">
+	                <div class="form_one">
+                      <form  method="post" name="formUser">
+                        <div class="item">
+                           <input type="text" name="username" placeholder="用户名" class="text"/><i class="i_name"></i>
+                           <label></label>
+                        </div>
+                        <div class="item">
+                           <input type="text" name="email" placeholder="邮箱地址" class="text"/><i class="i_email"></i>
+                           <label></label>
+                        </div>
+                        <div class="item">
+                           <input type="password" name="password" placeholder="设置密码" class="text"/><i class="i_pass"></i>
+                           <label></label>
+                        </div>
+                        <div class="item">
+                           <input type="password" name="con_password" placeholder="确认密码" class="text"/><i class="i_conpass"></i>
+                           <label></label>
+                        </div>
+                        <div class="item f12">
+                           <input type="checkbox" value=1 name="agree" checked="checked" class="c_box"/>阅读并同意《 <a href="">服务协议</a> 》
+                            <label></label>
+                        </div>
+                        <div class="item ">
+                           <input type="submit" name="submit" value="同意协议并注册" class="regist"/></div>
+                      </form>
+	                </div> <!-- 邮箱注册 -->
+	                <div class="form_two">
+                       <form action="" method="post" name="formUser">
+	                        <div class="item">
+	                           <input type="text" name="username" placeholder="用户名" class="text"/><i class="i_name"></i>
+	                           <label></label>
+	                        </div>
+	                        <div class="item">
+	                           <input type="text" name="phone" placeholder="手机号码" class="text"/><i class="i_phone"></i>
+	                           <label></label>
+	                        </div>
+	                        <div class="item">
+	                           <input type="password" name="password" placeholder="设置密码" class="text"/><i class="i_pass"></i>
+	                           <label></label>
+	                        </div>
+	                        <div class="item">
+	                           <input type="password" name="con_password" placeholder="确认密码" class="text"/><i class="i_conpass"></i>
+	                           <label></label>
+	                        </div>
+	                        <div class="item">
+	                           <input type="text" name="code" placeholder="验证码" class="text-2"/><a href="javascript:;" class="code"><img src="img/1.jpg"/></a>
+	                           <label></label>
+	                        </div>
+	                        <div class="item f12">
+	                           <input type="checkbox" value=1 name="agree" checked="checked" class="c_box"/>阅读并同意《 <a href="">服务协议</a> 》
+                               <label></label>
+                             </div>
+                            
+	                        <div class="item ">
+	                           <input type="button" name="submit" value="同意协议并注册" class="regist"/></div>
+                      </form>
+	                </div> <!-- 手机注册 -->
+               </div>
+             </div>
+          </div>
+        </div>
+	</div>
+	<div id="reg_foot">
+      <div class="reg_f">
+         <p>
+             <a href="">首页</a>
+              |
+	         <a href="">隐私保护</a>
+	        |
+	         <a href="">联系我们</a>
+	         |
+	         <a href="">免责保护</a>
+	          |
+	         <a href="">公司简介</a>
+	         |
+	         <a href="">商家入驻</a>
+	          |
+	         <a href="">意见反馈</a>
+         </p>
+          <p>
+             <a href="">模板堂</a>
+	        |
+	         <a href="">ECjia</a>
+	         |
+	         <a href="">ECjia</a>
+	         |
+	         <a href="">电商学院</a>
+	         |
+	         <a href="">ecshop模板堂</a>
+	         |
+	         <a href="">ECjia</a>
+	         |
+	         <a href="">ECjia</a>
+	        |
+             <a href="">大商创</a>
+         </p>
+         <p>ICP备案证书号:<a href="">DSC000001</a></p>
+         <p class="footer_from">Powered by <a href="">大商创1.0</a></p>
+         <p class="footer_img">
+            <a href=""><img src="img/banquan_1.jpg"/></a>
+            <a href=""><img src="img/banquan_2.jpg"/></a>
+            <a href=""><img src="img/banquan_3.jpg"/></a>
+            <a href=""><img src="img/banquan_4.jpg"/></a>
+            <a href=""><img src="img/banquan_5.jpg"/></a>
+         </p>
+      </div>
+	</div>
+</body>
+</html>

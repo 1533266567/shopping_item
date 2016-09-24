@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闪猫商城-您的一站式购物平台</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="css/detail.css"/>
+    <link rel="icon" type="image/gif" href="img/animated_favicon.gif"/>
+    <script src="libs/jquery-1.11.3.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+       $(function(){
+
+          //送货地址栏的操作
+	$('.send_t').mouseenter(function(){
+      $(".send_t").addClass('hover');
+      $('.sc_icon').css('display','block');
+	})
+	$('.send_t').mouseleave(function(){
+
+      $(".send_t").removeClass('hover');
+      $('.sc_icon').css('display','none');
+	})
+    $('.sc_blank').mouseover(function(){
+       $(".send_t").addClass('hover');
+      $('.sc_icon').css('display','block');
+    })
+    $('.sc_icon').mouseleave(function(){
+       $(".send_t").removeClass('hover');
+      $('.sc_icon').css('display','none');
+    }) 
+
+    //促销活动
+    $('.act').mouseenter(function(){
+	    	$(this).addClass('sale_hover');
+	    	$('.salewrap').css('display','block');
+
+    })
+     $('.act').mouseleave(function(){
+    	$(this).removeClass('sale_hover');
+	    	$('.salewrap').css('display','none');
+    })
+     //搜索切换
+     $('.s_change').mouseenter(function(){
+     	$('.s_change').find('ul').eq(0).css({'overflow':'visible','height':'auto'})
+     })
+       $('.s_change').mouseleave(function(){
+     	$('.s_change').find('ul').eq(0).css({'overflow':'hidden','height':'35px'})
+     })
+
+     //验证码
+     $('.sel_code').children('li').mouseenter(function(){
+   	  $(this).addClass('current');
+   	  $(this).siblings().removeClass('current');
+   	 $('.code_wrap').children().eq($(this).index()).show();
+     $('.code_wrap').children().eq($(this).index()).siblings().hide();
+   })
+
+
+    //左边大导航
+    $('.shop_div').on({
+    	mouseenter:function(){
+    		$('.dd').show();
+    		$('.dt').find('i').css('background-position','-279px -307px');
+    	},
+    	mouseleave:function(){
+    		$('.dd').hide();
+    		$('.dt').find('i').css('background-position','-264px -307px');
+    	}
+    })
+     
+    $('.item').mouseenter(function(){
+    	$(this).addClass('chose');
+    	$(this).children('.item_layer').show();
+    })
+     $('.item').mouseleave(function(){
+    	$(this).removeClass('chose');
+    	$(this).children('.item_layer').hide();
+    })
+
+     //ajax加载商品分类    
+  $('.item').mouseover(function(){
+  	 $.ajax({
+  	 	url:'splb/'+($(this).index()+1)+'.json',
+  	 	type:'get',
+  	 	success:function(res){
+         $('.la_l_nav').html(res.topic_content);
+         $('.la_l_con').html(res.cat_content);
+  	 	}
+  	 })
+  })
+    
+    //放大镜
+     $('.pre_pic').on({
+     	mouseover:function(){
+     		$('.zoomdiv').show();
+     		$('.zoompic').show();
+     	},
+     	mouseleave:function(){
+     		$('.zoomdiv').hide();
+     		$('.zoompic').hide();
+     	}
+     });
+
+    $('.pre_pic').mousemove(function(event){
+    	 //获取鼠标相对于当前div的坐标。鼠标的页面距离-div自身的offset值-移动div的一半值 真坑
+         var disX = event.pageX-$(this).offset().left-$('.zoomdiv').outerWidth()/2;
+         var disY = event.pageY-$(this).offset().top-$('.zoomdiv').outerHeight()/2;
+         
+          if(disX < 0){
+          	disX = 0;
+          }
+
+          if(disX > $('.pre_pic').outerWidth()-$('.zoomdiv').outerWidth()){
+          	disX = $('.pre_pic').outerWidth()-$('.zoomdiv').outerWidth();
+          }
+
+          if(disY < 0){
+          	   disY=0;
+          }
+          if(disY > $('.pre_pic').outerHeight()-$('.zoomdiv').outerHeight()){
+          	  disY =  $('.pre_pic').outerHeight()-$('.zoomdiv').outerHeight()
+          }
+         $('.zoomdiv').css({'left':disX,'top':disY});
+        
+         //求比例
+         var pro_l = disX/($('.pre_pic').outerWidth()-$('.zoomdiv').outerWidth());
+         var pro_t = disY/($('.pre_pic').outerHeight()-$('.zoomdiv').outerHeight());
+         
+          //赋等同比例
+         var left = -($('.picbox').outerWidth()-$('.zoompic').outerWidth())*pro_l;
+         var top = -($('.picbox').outerHeight()-$('.zoompic').outerHeight())*pro_t;
+         $('.picbox').css({'left':left,'top':top});
+    })
+
+  //显示用户信息;  
+   var haveName = $.cookie('username')==null ? true:false;
+         if(haveName){
+          $('.user_en').html('<a href="login.html" class="login">请登录</a><a href="register.html" class="regist">注册</a>')
+         }else{
+          var str = $.cookie('username');
+            $('.user_en').html('<span class="welcome">欢迎回来：'+str+' 用户</span><a href="detail.html" class="cancel">注销</a>');
+         }
+        
+        $('.cancel').click(function(){
+            $.cookie('username',null); //删除cookie
+        })
+
+  //动态加载商品信息;  
+    var id =  $.cookie('id')-1;
+    $.ajax({
+    	url:'goods/list.json',
+    	type: 'GET',
+    	success:function(res){
+             $('.preview').find('img').attr('src',res[id].img);
+             $('.name').find('h1').html(res[id].info);
+             $('.mj').find('strong').html('<em>￥</em>'+res[id].price+'');
+
+    	}
+    })
+ 
+    //预先获取购物车信息
+      my_car();
+      my_goods();
+      Dsum();
+     $('.addsc').click(function(){
+     	 var mId  = id;
+     	 var first = $.cookie('goods')==null ? true:false;
+     	 var same = false;
+     	 if(first){
+     	 	$.cookie('goods','[{id:'+id+',num:1}]');
+
+     	 }else{
+     	 	var str = $.cookie('goods');
+     	 	var attr = eval(str);
+     	 	for(var i in attr){
+     	 		if(attr[i].id == id){
+     	 			attr[i].num = attr[i].num +1;
+     	 			var cookieStr = JSON.stringify(attr);
+     	 			$.cookie('goods',cookieStr);
+     	 			same = true;
+
+     	 		}
+     	 	}
+          if(!same){
+            	var obj = {id:id,num:1};
+            	attr.push(obj);
+            	var cookieStr = JSON.stringify(attr);
+            	$.cookie('goods',cookieStr);
+            }
+
+     	 }
+
+        my_goods();
+
+        my_car();
+     }) 
+   
+   function Dsum(){
+        var total = 0;
+      for(var i=0;i<$('.cart_item').length;i++){
+
+       var price = $('.cart_item_price').eq(i).find('span').html().replace(/^\D+/,'');//正则匹配标签内容的数字
+  
+              var num = $('.cart_item_num').eq(i).html();//将值改为字符串
+                
+              var sum =  parseFloat(price*num);
+                 //相乘为整数，后转小数，再取后两位，返回字符串
+              
+               total+=sum; 
+
+      }
+          total = parseFloat(total).toFixed(2);       
+        $('.ch_r').html('<i>￥</i>'+total+'');
+
+}
+      //获取购物车里面的内容
+      function my_car(){
+         var my_str = $.cookie('goods');
+         if(my_str){  //判断是否为空
+
+            var my_obj = eval(my_str);
+            var my_num = 0;
+            for(var i in my_obj){
+              my_num = Number(my_obj[i].num) + my_num;
+            }
+           $('.carts').html(my_num); 
+           $('.cartnum').html(my_num);//将数量值显示出来
+         }
+      }
+    var flag = true;
+        //加载购物车商品函数
+    function my_goods(){
+        $.ajax({
+          url:"goods/list.json",
+          type:"get",
+          success:function(res){
+              var my_str = $.cookie('goods');
+              if(my_str){
+                 var my_obj = eval(my_str);
+                 var my_num = 0;
+                 var html = '';
+                
+                 for(var i in my_obj){
+                   html+='<li class="cart_item"><div class="cart_item_pic"><a href=""><img src="'+res[my_obj[i].id].img+'"/></a></div><div class="cart_item_desc"><a class="cart_item_name" href="">'+res[my_obj[i].id].info+'</a><div class="cart_item_price"><span><em>￥</em>'+res[my_obj[i].id].price+'</span>×<i class="cart_item_num">'+my_obj[i].num+'</i></div></div><a  class="cart_del" href="javascript:;">删除</a></li>';
+                 }
+                 $('.cartgroup').find('ul').html(html);
+                   
+                   Dsum();
+              }
+         
+              $('.cart_del').click(function(){ //该index是相对其父级的
+                  $(this).parent().remove(); //直接删除该节点
+                    var my_str = $.cookie('goods');
+                     var my_obj = eval(my_str);
+                   my_obj.splice($(this).parent().index(),1); //删除cookie
+                   var cookieStr = JSON.stringify(my_obj)//将json对象转换成字符串.
+                  $.cookie('goods',cookieStr);//将cookie再写入
+                  my_car();//重新显示数量
+                  Dsum();
+              });
+    
+          }
+        })
+     }
+  //商品数量加减
+  var t_num = 1;
+    $('.redn').click(function(){
+        if(t_num < 2){
+          t_num = 1;
+        }else{
+          t_num--;
+        }
+    	$('.text').val(t_num);
+      $('.cart_item_num').eq($('.cart_item').length-1).html(t_num);
+      Dsum();
+      my_car();
+    })
+
+    $('.addn').click(function(){
+        t_num++;
+     	$('.text').val(t_num);
+      $('.cart_item_num').eq($('.cart_item').length-1).html(t_num);
+      Dsum();
+       my_car();
+    })
+
+  //购物车栏
+    $('.linkpanel').find('li').on({
+       mouseenter:function(){
+         $(this).find('a').addClass('on');
+       },
+       mouseleave:function(){
+         $(this).find('a').removeClass('on');
+       }
+    })
+ $('.cartlist').on({
+       mouseenter:function(){
+         $(this).addClass('on');
+       },
+       mouseleave:function(){
+         $(this).removeClass('on');
+       },
+      //购物车滑入滑出
+       click:function(){
+         if($('.morelinkwrap').css('right') == '0px'){
+             $('.morelinkwrap').stop().animate({'right':'-280'});
+              $(this).addClass('on');
+          }else{
+             $('.morelinkwrap').stop().animate({'right':0});
+             $(this).removeClass('on');
+          }
+       }
+   })
+   //购物车关闭
+    $('.close').click(function(){
+        if($('.morelinkwrap').css('right') == '0px'){
+             $('.morelinkwrap').stop().animate({'right':'-280'});
+              
+          }else{
+             $('.morelinkwrap').stop().animate({'right':0});
+             
+          }
+    })
+  
+   //回到顶部 
+  $(window).scroll(function(){
+      if($(window).scrollTop()>$('.shop_nav').offset().top){
+          $('.returntop').show();
+
+      }else{
+           $('.returntop').hide();
+      }
+       
+       })
+
+   $('.returntop').click(function(){
+
+       $('body,html').stop().animate({scrollTop:0});
+    })
+  
+   //加载猜你喜欢
+   
+    
+	    $.ajax({
+
+	    	url:'goods/list.json',
+	    	type:'GET',
+	    	success:function(res){
+	    	  var pag=0;
+	    	   guess();
+	    	  $('.change').click(function(){
+    	             if( pag ==(Math.ceil(res.length/7))-1){
+    	             	pag=0;
+    	             }else{
+    	             	pag++;
+    	             }
+    	            guess();
+               })
+
+	   function guess(){
+	        var html="";
+	          for(var i=pag*7;i<(pag+1)*7;i++){
+	          	if(i<res.length){
+	            html+='<li><div class="p_img"><a href="#"><img src="'+res[i].img+'"/></a></div><div class="p_name"><a href="#">'+res[i].info+'</a></div><div class="p_price"><em>￥</em>'+res[i].price+'</div><a class="qg" href="list.html" target="_blank">去抢购 ></a></li>';
+	              }
+	             
+	            } 
+	          $('.gl_list').find('ul').html(html);
+	        }
+	      }  
+	    })
+   
+     $('.infor').find('i').click(function(){
+     	 $('.sell_from').slideToggle();
+     })
+
+       //切换商品和店铺
+   $('.cur').click(function(){
+        var html = $(this).html();
+        var shtml = $(this).siblings().html();
+        $(this).html(shtml);
+        $(this).siblings().html(html);
+        $(this).parent().css({
+          'overflow':"hidden",
+          'height':'35px'
+        })
+   })
+  
+  })
+ 
+    </script>
+</head>
+<body>
+	<div id="navwrap">
+       <div class="nav clear">
+         <ul class="send fl"> 
+           <li class="fl">
+             <dt class="son fl">
+               <span>送货至：</span>
+               <div class="send_t fl">
+                  <span>北京</span>
+                  <i></i>
+               </div>
+             </dt>
+             <dd class="sc_icon">
+                <div class="sc_blank"></div>
+                <div class="cy_wrap">
+                  <div class="city">
+                   <span><a class="active" href="">北京</a></span>
+                   <span><a href="">上海</a></span>
+                   <span><a href="">天津</a></span>
+                   <span><a href="">重庆</a></span>
+                   <span><a href="">河北</a></span>
+                   <span><a href="">山西</a></span>
+                   <span><a href="">河南</a></span>
+                   <span><a href="">辽宁</a></span>
+                   <span><a href="">吉林</a></span>
+                   <span><a href="">黑龙江</a></span>
+                   <span><a href="">内蒙古</a></span>
+                   <span><a href="">江苏</a></span>
+                   <span><a href="">山东</a></span>
+                   <span><a href="">安徽</a></span>
+                   <span><a href="">浙江</a></span>
+                   <span><a href="">福建</a></span>
+                   <span><a href="">湖北</a></span>
+                   <span><a href="">湖南</a></span>
+                   <span><a href="">广东</a></span>
+                   <span><a href="">广西</a></span>
+                   <span><a href="">江西</a></span>
+                   <span><a href="">四川</a></span>
+                   <span><a href="">海南</a></span>
+                   <span><a href="">贵州</a></span>
+                   <span><a href="">云南</a></span>
+                   <span><a href="">西藏</a></span>
+                   <span><a href="">陕西</a></span>
+                   <span><a href="">甘肃</a></span>
+                   <span><a href="">青海</a></span>
+                   <span><a href="">宁夏</a></span>
+                   <span><a href="">新疆</a></span>
+                   <span><a href="">台湾</a></span>
+                   <span><a href="">香港</a></span>
+                   <span><a href="">澳门</a></span>
+                   <span><a href="">钓鱼岛</a></span>
+                   <span><a href="">海外</a></span>
+                  </div>
+                </div>
+             </dd>
+           </li>
+         </ul><!-- 送货 -->
+         <div class="user_en">
+            <a href="login.html" class="login">请登录</a>
+            <a href="register.html" class="regist">注册</a>
+         </div><!-- 登录注册 -->
+         <ul class="moreser">
+           <li>
+              <a href="">我的订单</a>
+           </li>
+           <li class="spacer"></li>
+           <li>
+              <a href="">我的浏览</a>
+           </li>
+           <li class="spacer"></li>
+           <li>
+              <a href="">我的收藏</a>
+           </li>
+           <li class="spacer"></li>
+           <li>
+              <a href="">客户服务</a>
+           </li>
+           <li class="spacer"></li>
+           <li class="act">
+              <dt><a href="">促销活动</a> <i></i></dt>
+              <dd>
+                 <div class="salewrap">
+                    <div class="sale_blank"></div>
+                    <span><a href="">拍卖活动</a></span>
+                    <span><a href="">优惠礼包</a></span>
+                    <span><a href="">批发市场</a></span>
+                    <span><a href="">超值礼包</a></span>
+                 </div>
+              </dd>
+           </li>
+         </ul><!-- 其他服务 -->
+         <div class="shopcar">
+          <div class="shopcar_con">
+            <i class="econ_l"></i>
+            <i class="econ_t">0</i>
+            <a href="" class="cf">购物车 <i class="econ_r">></i></a>
+          </div>
+         </div><!-- 购物车导航 -->
+       </div>
+	</div><!-- 头部导航 -->
+	<div id="header" class="clear">
+     <div class="h_logo">
+       <a href="index.html"><img src="img/logo.gif"/></a>
+     </div><!-- 标题 -->
+     <div class="h_join">
+       <a href=""><img src="img/ecsc-join.gif"/></a> 
+     </div> 
+     <div  class="h_search">
+        <form class="search_form">
+          <div class="s_change">
+             <i></i>
+             <ul>
+               <li>商品</li>
+               <li class="cur">店铺</li>
+             </ul>
+          </div>
+          <input type="text" name="keywords" placeholder="iphone 7" class="s_input"/>
+          <div class="s_btn">
+            <i></i>
+          </div>
+        </form>
+        <div class="s_key">
+           <ul>
+              <li><a href="">周大福</a></li>
+              <li class="spacer"></li>
+              <li><a href="">内衣</a></li>
+              <li class="spacer"></li>
+              <li><a href="">Five Plus</a></li>
+              <li class="spacer"></li>
+              <li><a href="">手机</a></li>
+            </ul>
+        </div>
+     </div><!-- 搜索栏 -->
+     <div  class="h_rule">
+        <div class="h_rule_front"><a href=""></a></div>
+        <div class="h_rule_back"><a href=""></a></div>
+     </div>
+  </div><!--  搜索标题 -->
+ 
+  <div id="shopnav">
+     <div class="shop_nav clear">
+       <div class="shop_div">
+         <div class="dt">
+            <a href="">全部商品分类</a>
+            <i></i>
+         </div><!-- 顶部 -->
+         <div class="dd">
+             <div class="dd_nav">
+               <div class="item">
+                  <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">家用电器</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div><!-- 左侧标题 -->
+                  <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div><!-- 右侧主体 -->
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">手机</a>、<a href="">数码</a>、<a href="">通信</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                         
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                         <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div>
+                      </div>
+                  </div>
+               </div>
+              <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">电脑</a>、<a href="">办公</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                 <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">家具</a>、<a href="">家居</a>、<a href="">家装</a>、<a href="">厨具</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">男装</a>、<a href="">女装</a>、<a href="">内衣</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">鞋靴</a>、<a href="">箱包</a>、<a href="">钟表</a>、<a href="">奢侈品</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">个人化妆</a>、<a href="">清洁品</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">母婴</a>、<a href="">玩具乐器</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">图书</a>、<a href="">音像</a>、<a href="">电子书</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+              <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">休闲</a>、<a href="">运动</a>、<a href="">户外健身</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">保健滋补</a>、<a href="">医药</a>、<a href="">成人</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">腕表</a>、<a href="">珠宝配饰</a>、<a href="">眼镜</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">汽车</a>、<a href="">汽车用品</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+              <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">食品</a>、<a href="">酒类</a>、<a href="">生鲜</a>、<a href="">特产</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                 <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">营养保健</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+               <div class="item">
+                  <div class="item_h">
+                     <div class="item_name">
+                        <h3><a href="">礼品</a>、<a href="">卡</a>、<a href="">旅游</a>、<a href="">充值</a></h3>
+                     </div>
+                     <b> > </b>
+                  </div>
+                   <div class="item_layer">
+                      <div class="layer_left">
+                        <div class="la_l_nav">
+                      
+                        </div><!-- 细类标题 -->
+                        <div class="la_l_con">
+                           
+                        </div><!-- 细类内容 -->
+                      </div><!-- 细类左侧 -->
+                      <div class="layer_right">
+                       <div class="item_brands">
+                            <ul>
+                               <li><a href=""><img src="img/1395609430359661354.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609448085188590.jpg"/></a></li>
+                                <li><a href="src="img/"><img src="img/1395609485683169733.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609500714797761.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609551702073931.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395609569607072388.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395686945111210691.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395687067884972599.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689600757717807.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689623918543922.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395689643837614999.jpg"/></a></li>
+                                <li><a href=""><img src="img/1395696502751560656.jpg"/></a></li>
+                            </ul>
+                         </div>
+                         <div class="item_promotions">
+                            <a href=""><img src="img/1449514727068149215.jpg"/></a>
+                         </div> 
+                      </div>
+                  </div>
+               </div>
+            </div>
+         </div><!-- 导航主体 -->
+       </div>
+       <div class="shop_item">
+           <ul>
+             <li><a href="" >首页</a></li>
+             <li><a href="">食品特产</a></li>
+             <li><a href="">服装城</a></li>
+             <li><a href="" class="select">大家电</a></li>
+             <li><a href="">品牌专区</a></li>
+             <li><a href="">团购</a></li>
+             <li><a href="">夺宝奇兵</a></li>
+             <li><a href="">积分商城</a></li>
+             <li><a href="">预售频道</a></li>
+             <li><a href="">店铺街</a></li>
+           </ul>
+           <!-- <div class="item_line"></div> -->
+       </div><!-- 右侧导航 -->
+     </div>
+  </div>
+  
+   <div class="selectlist clear">
+      <h1>家用电器</h1>
+      <span class="arrow"> > </span>
+      <span class="sel_item">
+         <span class="sel_tit">
+            <a href="list.html">大家电</a>
+            <i></i>
+         </span>
+         <div class="sel_laywer"></div>
+      </span>
+      <span class="arrow"> > </span>
+      <span class="sel_item">
+         <span class="sel_tit">
+            <a href="#">平板电视</a>
+            <i></i>
+         </span>
+         <div class="sel_laywer"></div>
+      </span>
+      <span class="arrow"> > </span>
+      <span>乐视超级电视 第3代X40（X3-40）40英寸2D智能LED液晶电视(L403PN或L403SN或L403IN)</span>
+   </div>
+   
+   <div id="d_box">
+       <div class="boxwrap clear">
+         <div class="preview">
+            <div class="pre_pic">
+               <a href="javascript:;">
+                 <img style="width:405px;height:405px;" src="img/520_G_1457131021435.jpg"/>  
+                 <div class="zoomdiv"></div>
+                 <div class="zoompic">
+                    <div class="picbox">
+                       <img src="img/520_G_1457131021435.jpg"/>
+                    </div>
+                 </div>
+               </a>
+            </div>
+            <div class="pre_list">
+                <a  class="pre_prve" href="javascript:;"></a>
+                <a class="pre_next" href="javascript:;"></a>
+                <div class="pre_item">
+                  <ul>
+                     <li><a href="javascript:;"><img style="width:60px;height:60px;" src="img/520_G_1457131021435.jpg"/></a></li>
+                  </ul>
+                </div>
+            </div>
+            <div class="pre_share">
+               <div class="short_share">
+                  <div class="share">
+                      <span>分享：</span>
+                      <a class="qzone" href=""></a>
+                      <a class="sina" href=""></a>
+                      <a class="qq" href=""></a>
+                      <a class="renren" href=""></a>
+                      <a class="wy" href="#"></a>
+                  </div>
+               </div>
+               <div class="collect">
+                   <span>收藏：</span>
+                   <a href="javascript:;">
+                     <i></i>
+                      0
+                   </a>
+               </div>
+               <div class="compare">
+                    <a href="#">对比</a>
+               </div>
+            </div>
+         </div>
+         <div class="massage">
+            <div class="massageinfo">
+                <div class="name">
+                   <h1>乐视超级电视 第3代X40（X3-40）40英寸2D智能LED液晶电视(L403PN或L403SN或L403IN)</h1>
+                </div>
+                <div class="summary clear">
+                   <div class="sum_list">
+                      <div class="sum_list_h">
+                         <span class="mp">本店价</span>
+                         <span class="sp">市场价</span>
+                         <span class="pj">评价</span>
+                         <span class="xl">销量</span>
+                      </div>
+                      <div class="sum_list_c">
+                         <span class="mj">
+                            <strong><em>￥</em>3000.00</strong>
+                            <a href="#">(降价通知)</a>
+                         </span>
+                         <span class="sj"><em>￥</em>3600.00</span>
+                         <span class="ps">0</span>
+                         <span class="xs">0</span>
+                      </div>
+                   </div>
+                   <div class="sum_stock">
+                      <div class="sh">配&nbsp;&nbsp;送：</div>
+                      <div class="ss_select">
+                         <div class="ss_dt">
+                            北京市
+                            <i></i>
+                         </div>
+                         <div class="ss_dd"></div>
+                      </div>
+                      <div class="ss_msg">
+                          <div class="msg">
+                             <strong>有货，</strong>
+                             下单后立即发货
+                          </div>
+                      </div>
+                   </div>
+                   <div class="sum_serv">
+                      <div class="fw">服&nbsp;&nbsp;务：</div>
+                      <div class="serv">由 <a href="index.html">闪猫商城</a>发货并提供售后服务。<span>[运费：￥10.00]</span>
+                      </div>
+                   </div>
+                </div>
+                <div class="choose">
+                    <div class="chose_num">
+                      <div class="cn">数&nbsp;&nbsp;量：</div>
+                      <div class="fnum">
+                         <a class="redn" href="javascript:;"></a>
+                         <input type="text" class="text" name="num" value="1"/>
+                         <a  class="addn" href="javascript:;"></a>
+                         <span>库存：<em>1000</em></sapn>
+                      </div>
+                    </div>
+                    <div class="choose_btn">
+                       <a class="buy" href="zhifu.html" target="_blank">立即购买</a>
+                       <a class="addsc" href="javascript:;">
+                       <i></i>加入购物车</a>
+                    </div>
+                </div>
+            </div>
+         </div>
+         <div class="seller"> 
+            <ul>
+               <li class="sell_name"><a href="#"><img src="img/1395609463390225939.jpg"/></a></li>
+               <li class="infor">
+                 <a href="#">闪猫商城</a>
+                 <i></i>
+               </li>
+               <li class="sell_from">
+                 <span><em>品&nbsp;牌:</em>她/她/tata</span>
+                 <span><em>所在地:</em>广东 广州市</span>
+               </li>
+               <li class="sell_kefu">
+                  <a href="#"><i></i>联系客服</a>
+               </li>
+            </ul>
+         </div>
+       </div>
+   </div><!-- 主体 -->
+
+ <div class="glove">
+     <div class="gl_t">
+       <h3>猜你喜欢</h3>
+       <a class="change" href="javascript:;"><i></i>换一组</a>
+     </div>
+     <div class="gl_list">
+        <ul>
+           <li>
+                 <div class="p_img">
+                     <a href="#"><img src="img/519_thumb_G_1457130960274.jpg"/></a>
+                  </div>
+                  <div class="p_name">
+                       <a href="#">乐视超级电视 S50 Air 全配版 50英寸2D智能LED黑色（Letv S50 Air）</a>
+                     </div>
+                     <div class="p_price">
+                        <em>￥</em>
+                        3469.00
+                     </div>
+                     <a class="qg" href="">去抢购 ></a>
+               </li>
+                <li>
+                     <div class="p_img">
+                       <a href="#"><img src="img/519_thumb_G_1457130960274.jpg"/></a>
+                     </div>
+                     <div class="p_name">
+                       <a href="#">乐视超级电视 S50 Air 全配版 50英寸2D智能LED黑色（Letv S50 Air）</a>
+                     </div>
+                     <div class="p_price">
+                        <em>￥</em>
+                        3469.00
+                     </div>
+                     <a class="qg" href="">去抢购 ></a>
+           </li>
+        </ul>
+     </div>
+ </div>
+
+
+   <div id="footer">
+     <div class="footer_global">
+        <div class="footer_service">
+          <ul>
+            <li>
+              <em class="bz"></em>
+              <span>正品保障</span>
+            </li>
+             <li>
+              <em class="qd"></em>
+              <span>七天包退</span>
+            </li>
+            <li>
+              <em class="hp"></em>
+              <span>好评如潮</span>
+            </li>
+             <li>
+              <em class="fh"></em>
+              <span>闪电发货</span>
+            </li>
+             <li class="last">
+              <em class="ry"></em>
+              <span>权威荣誉</span>
+            </li>
+          </ul>
+        </div>
+     </div>
+     <div class="footer_desc">
+        <div class="footer_desc_list">
+          <dl>
+            <dt>新手上路 </dt>
+            <dd><a href="">> 售后流程</a></dd>
+            <dd><a href="">> 购物流程</a></dd>
+            <dd><a href="">> 订购方式</a></dd>
+            <dd><a href="">> 隐私声明</a></dd>
+          </dl>
+          <dl>
+            <dt>配送与支付</dt>
+            <dd><a href="">> 货到付款区域</a></dd>
+            <dd><a href="">> 配送支付智能查询 </a></dd>
+            <dd><a href="">> 支付方式说明</a></dd>
+            <dd><a href="">> 上门自提</a></dd>
+          </dl>
+          <dl>
+            <dt>会员中心</dt>
+            <dd><a href="">> 资金管理</a></dd>
+            <dd><a href="">> 我的收藏</a></dd>
+            <dd><a href="">> 我的订单</a></dd>
+          </dl>
+          <dl>
+            <dt>服务保证</dt>
+            <dd><a href="">> 退换货原则</a></dd>
+            <dd><a href="">> 售后服务保证</a></dd>
+            <dd><a href="">> 产品质量保证 </a></dd>
+          </dl>
+          <dl class="contact_us">
+            <dt>联系我们</dt>
+            <dd><a href="">> 网站故障报告</a></dd>
+            <dd><a href="">> 选机资询</a></dd>
+            <dd><a href="">> 投诉与建议 </a></dd>
+          </dl>
+          <div class="QR_code">
+              <ul class="sel_code">
+                <li class="current">ECjia</li>
+                <li>ECtouch</li>
+              </ul>
+              <div class="code_wrap">
+                 <div class="code_tp"><img src="img/ECJia_code.png" alt=""></div>
+                 <div class="code_tp hide"><img src="img/ECtouch_code.png" alt=""></div>
+              </div>
+          </div>
+        </div>
+        <div class="footer_desc_copyright">
+         <p>
+             <a href="">首页</a>
+              |
+           <a href="">隐私保护</a>
+          |
+           <a href="">联系我们</a>
+           |
+           <a href="">免责保护</a>
+            |
+           <a href="">公司简介</a>
+           |
+           <a href="">商家入驻</a>
+            |
+           <a href="">意见反馈</a>
+         </p>
+          <p>
+             <a href="">模板堂</a>
+          |
+           <a href="">ECjia</a>
+           |
+           <a href="">ECjia</a>
+           |
+           <a href="">电商学院</a>
+           |
+           <a href="">ecshop模板堂</a>
+           |
+           <a href="">ECjia</a>
+           |
+           <a href="">ECjia</a>
+          |
+             <a href="">大商创</a>
+         </p>
+         <p>ICP备案证书号:<a href="">DSC000001</a></p>
+         <p class="footer_from">Powered by <a href=""><span>大商创1.0</span></a></p>
+         <p class="footer_img">
+            <a href=""><img src="img/banquan_1.jpg"/></a>
+            <a href=""><img src="img/banquan_2.jpg"/></a>
+            <a href=""><img src="img/banquan_3.jpg"/></a>
+            <a href=""><img src="img/banquan_4.jpg"/></a>
+            <a href=""><img src="img/banquan_5.jpg"/></a>
+         </p>
+        </div>
+     </div><!-- 底部 -->
+
+    <div class="muttab">
+     <div class="morelinkwrap">
+        <div class="linkpanel">
+          <div class="quick_link">
+             <ul>
+                <li>
+                   <a href=""><i class="setting"></i></a>
+                   <div></div>
+                </li>
+                <li id="shopcart">
+                    <a class="cartlist" href="javascript:;">
+                      <i class="cart"></i>
+                      <em>购物车</em>
+                      <span class="cartnum">0</span>
+                    </a>
+                </li>
+                <li>
+                   <a href=""><i class="mydd"></i></a>
+                   <div></div>
+                </li> 
+                <li>
+                   <a href=""><i class="mymoney"></i></a>
+                   <div></div>
+                </li>
+                <li>
+                   <a href=""><i class="myhistory"></i></a>
+                   <div></div>
+                </li>
+                <li>
+                   <a href=""><i class="mycollect"></i></a>
+                   <div></div>
+                </li>
+             </ul>
+          </div> 
+          <div class="quick_toggle">
+             <ul>
+               <li>
+                  <a href="">
+                      <i class="kfzx"></i>
+                  </a>
+                  <div></div>
+               </li>
+               <li class="returntop">
+                  <a href="javascript:;">
+                      <i class="top"></i>
+                  </a>
+               </li>
+             </ul>
+          </div>
+        </div>
+        <div class="linkpop">
+            <a class="close" href="#"></a>
+            <div class="cartitle">
+               <h3>购物车</h3>
+            </div>
+            <div class="cart_panel">
+                <div class="cart_main">
+                   <div class="cart_con">
+                       <div class="cartgroup">
+                          <ul>
+                            
+                          </ul>
+                       </div>
+                   </div>
+                   <div class="cart_handle">
+                       <div class="cart_handle_h">
+                          <span class="ch_l">共<em class="carts">0</em>件商品</span>
+                          <span class="ch_r"><i>￥</i></span>
+                       </div>
+                       <a class="fukuan" href="zhifu.html" target="_blank">去购物车结算</a>
+                   </div>
+                </div>
+            </div>
+        </div>
+     </div>
+  </div><!-- 购物车 -->
+</body>
+</html>

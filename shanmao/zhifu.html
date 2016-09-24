@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>购物流程-闪猫商城-您的一站式购物平台</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+  <link rel="stylesheet" type="text/css" href="css/zhifu.css"/>
+  <link rel="icon" type="image/gif" href="img/animated_favicon.gif"/>
+  <script src="libs/jquery-1.11.3.js"></script>
+  <script src="js/jquery.cookie.js"></script>
+  <script>
+     $(function(){
+              //送货地址栏的操作
+  $('.send_t').mouseenter(function(){
+      $(".send_t").addClass('hover');
+      $('.sc_icon').css('display','block');
+  })
+  $('.send_t').mouseleave(function(){
+
+      $(".send_t").removeClass('hover');
+      $('.sc_icon').css('display','none');
+  })
+    $('.sc_blank').mouseover(function(){
+       $(".send_t").addClass('hover');
+      $('.sc_icon').css('display','block');
+    })
+    $('.sc_icon').mouseleave(function(){
+       $(".send_t").removeClass('hover');
+      $('.sc_icon').css('display','none');
+    }) 
+
+    //促销活动
+    $('.act').mouseenter(function(){
+        $(this).addClass('sale_hover');
+        $('.salewrap').css('display','block');
+
+    })
+     $('.act').mouseleave(function(){
+      $(this).removeClass('sale_hover');
+        $('.salewrap').css('display','none');
+    })
+     //搜索切换
+     $('.s_change').mouseenter(function(){
+      $('.s_change').find('ul').eq(0).css({'overflow':'visible','height':'auto'})
+     })
+       $('.s_change').mouseleave(function(){
+      $('.s_change').find('ul').eq(0).css({'overflow':'hidden','height':'35px'})
+     })
+
+    //切换商品和店铺
+   $('.cur').click(function(){
+        var html = $(this).html();
+        var shtml = $(this).siblings().html();
+        $(this).html(shtml);
+        $(this).siblings().html(html);
+        $(this).parent().css({
+          'overflow':"hidden",
+          'height':'35px'
+        })
+   })
+
+   //推荐商品
+       $('.more_nav >ul >li').mouseover(function(){
+             $(this).addClass('on');
+             $(this).siblings().removeClass('on');
+             $('.more_com').children().eq($(this).index()).show();
+             $('.more_com').children().eq($(this).index()).siblings().hide();
+       })
+
+   //ajax加载推荐商品
+    //列表1
+    $.ajax({
+       url:'goods/hot.json',
+       type:'get',
+       success:function(res){
+             var html='';
+           for(var i=0;i<res.length;i++){
+              html+=' <li><div class="cl_item"><div class="cl_img"><a href="list.html"><img src="'+res[i].src+'"/></a></div><div class="cl_price"><em>￥</em>'+res[i].price+'</div><div  class="cl_name"><a href="list.html">'+res[i].title+'</a></div><div  class="cl_seller"><a href="#">闪猫商城</a></div><div  class="cl_num">销量：0</div></div></li>';
+           }
+          $('.more_time1').find('ul').html(html);
+          //求li的宽度(包括margin)
+          var li_l = $('.more_time1').find('li').eq(0).outerWidth(true);
+         //求ul的宽度
+          var ul_l = $('.more_time1').find('li').eq(0).outerWidth(true)*$('.more_time1').find('li').length;
+          //赋予ul的宽度
+          $('.more_time1').find('ul').width(ul_l);  
+          var n = 0;
+          //左按钮移动
+          $('.more_time1').find('.c_prev').click(function(){
+               if(n==0){
+                  n=0;
+               }else{
+                  n--;
+               }
+           $('.more_time1').find('ul').stop().animate( { 'left':-n*li_l } );
+          })
+        //右按钮移动
+          $('.more_time1').find('.c_next').click(function(){
+               if( n==$('.more_time1').find('li').length-6 ){
+                  n=$('.more_time1').find('li').length-6;
+               }else{
+                  n++;
+               }
+           $('.more_time1').find('ul').stop().animate( { 'left':-n*li_l } );
+          })
+       }
+    })
+    //列表2
+     $.ajax({
+       url:'goods/qiang.json',
+       type:'get',
+       success:function(res){
+             var html='';
+           for(var i=0;i<res.length;i++){
+              html+=' <li><div class="cl_item"><div class="cl_img"><a href="list.html"><img src="'+res[i].src+'"/></a></div><div class="cl_price"><em>￥</em>'+res[i].price+'</div><div  class="cl_name"><a href="list.html">'+res[i].title+'</a></div><div  class="cl_seller"><a href="#">闪猫商城</a></div><div  class="cl_num">销量：0</div></div></li>';
+           }
+          $('.more_time2').find('ul').html(html);
+          //求li的宽度
+          var li_l = $('.more_time2').find('li').eq(0).outerWidth(true);
+         //求ul的宽度
+          var ul_l = $('.more_time2').find('li').eq(0).outerWidth(true)*$('.more_time2').find('li').length;
+          //赋予ul的宽度
+          $('.more_time2').find('ul').width(ul_l);  
+          var n = 0;
+          //左按钮移动
+          $('.more_time2').find('.c_prev').click(function(){
+               if(n==0){
+                  n=0;
+               }else{
+                  n--;
+               }
+           $('.more_time2').find('ul').stop().animate( { 'left':-n*li_l } );
+          })
+        //右按钮移动
+          $('.more_time2').find('.c_next').click(function(){
+               if( n==$('.more_time1').find('li').length-6 ){
+                  n=$('.more_time1').find('li').length-6;
+               }else{
+                  n++;
+               }
+           $('.more_time2').find('ul').stop().animate( { 'left':-n*li_l } );
+          })
+       }
+    })
+    //列表3
+    $.ajax({
+       url:'goods/hot.json',
+       type:'get',
+       success:function(res){
+             var html='';
+           for(var i=0;i<res.length;i++){
+              html+=' <li><div class="cl_item"><div class="cl_img"><a href="list.html"><img src="'+res[i].src+'"/></a></div><div class="cl_price"><em>￥</em>'+res[i].price+'</div><div  class="cl_name"><a href="list.html">'+res[i].title+'</a></div><div  class="cl_seller"><a href="#">闪猫商城</a></div><div  class="cl_num">销量：0</div></div></li>';
+           }
+          $('.more_time3').find('ul').html(html);
+          //求li的宽度
+          var li_l = $('.more_time3').find('li').eq(0).outerWidth(true);
+         //求ul的宽度
+          var ul_l = $('.more_time3').find('li').eq(0).outerWidth(true)*$('.more_time1').find('li').length;
+          //赋予ul的宽度
+          $('.more_time3').find('ul').width(ul_l);  
+          var n = 0;
+          //左按钮移动
+          $('.more_time3').find('.c_prev').click(function(){
+               if(n==0){
+                  n=0;
+               }else{
+                  n--;
+               }
+           $('.more_time3').find('ul').stop().animate( { 'left':-n*li_l } );
+          })
+        //右按钮移动
+          $('.more_time3').find('.c_next').click(function(){
+               if( n==$('.more_time1').find('li').length-6 ){
+                  n=$('.more_time1').find('li').length-6;
+               }else{
+                  n++;
+               }
+           $('.more_time3').find('ul').stop().animate( { 'left':-n*li_l } );
+          })
+       }
+    })
+
+ //加载用户信息
+   var haveName = $.cookie('username')==null ? true:false;
+         if(haveName){
+          $('.user_en').html('<a href="login.html" class="login">请登录</a><a href="register.html" class="regist">注册</a>')
+         }else{
+          var str = $.cookie('username');
+            $('.user_en').html('<span class="welcome">欢迎回来：'+str+' 用户</span><a href="zhifu.html" class="cancel">注销</a>');
+         }
+        
+        $('.cancel').click(function(){
+            $.cookie('username',null); //删除cookie
+        })
+   
+  
+ 
+   //加载购物车的商品
+     var str = $.cookie('goods');
+     var obj = eval(str);
+     console.log($.cookie('goods'));
+     var length = obj.length;
+     $.ajax({
+       url:'goods/list.json',
+       type:'get',
+       success:function(res){
+            var html='';
+             for(var i=0;i<length;i++){
+
+                html ='<div class="g_goods"><i></i><div class="goods_meg"><div class="g_img"><a href="#"><img src="'+res[obj[i].id].img+'"/></a></div><div class="g_name"><a href="#">'+res[obj[i].id].info+'</a></div></div></div><div class="g_price"><span class="gp"><em>￥</em>'+res[obj[i].id].price+'</span></div><div class="g_num"><div class="g_suan"><a class="prv" href="javascript:;"> - </a><input class="text" type="text" value="'+obj[i].num+'"/><a class="next" href="javascript:;"> + </a></div><div class="yh">有货</div></div><div class="g_sum"><span class="gs"><em>￥</em>'+res[obj[i].id].price+'</span></div><div class="g_hand"><a class="remove" href="javascript:;">删除</a><a class="moveto" href="javascript:;">移动到我的收藏</a></div>';
+
+                      var oDiv = $('<div class="goods clear"></div>');
+                       oDiv.empty(); //每循环一次清一次div的内容
+                       oDiv.html(html); 
+                      $('.item').append(oDiv);
+             }
+           
+              //选择数量
+              $('.prv').click(function(){
+                   var pn = $(this).next().val();
+                    if(pn == 1){
+                       pn =1;
+                    }else{
+                      pn--;
+                    }
+                  $(this).next('.text').val(pn);  
+                  sum();
+              })
+             $('.next').click(function(){
+                var nn = $(this).prev().val();
+                   nn++;
+                  $(this).prev('.text').val(nn);  
+                  sum();
+               })
+
+              //打钩按钮
+              $('.con_goods').find('i').click(function(){
+
+                  $('.con_goods').find('i').toggleClass('click');
+
+             });
+            
+            //删除按钮
+            $('.remove').click(function(){
+                $(this).parent().parent().remove();
+                var d_str = $.cookie('goods');
+                var obj = eval(d_str);
+                obj.splice($(this).parent().parent().index(),1)//删除cookie
+                var o_str = JSON.stringify(obj);
+                $.cookie('goods',o_str);
+
+                 sum();
+            })
+             
+            sum();//预先加载数目
+         }
+
+   })
+   
+  //计算金额
+       function sum(){
+        var total = 0;
+        var sum=0;
+        var c_num= 0;
+        for(var i=0;i<$('.goods').length;i++){
+         
+            var price = $('.gp').eq(i).html().replace(/^\D+/,'');//正则匹配标签内容的数字
+
+              var  s_num = $('.text').eq(i).val();
+           
+               sum =  parseFloat(price*s_num);
+
+              total+=sum;
+
+              c_num+=parseFloat(s_num);
+     }
+           total = parseFloat(total).toFixed(2);
+          $('.zj_cash').html('<em>￥</em>'+total+'');
+          $('.c_num').html(c_num);
+          $('.ch_num').html(c_num);
+    }
+
+})
+  </script>
+</head>
+<body>
+  <div id="navwrap">
+       <div class="nav clear">
+         <ul class="send fl"> 
+           <li class="fl">
+             <dt class="son fl">
+               <span>送货至：</span>
+               <div class="send_t fl">
+                  <span>北京</span>
+                  <i></i>
+               </div>
+             </dt>
+             <dd class="sc_icon">
+                <div class="sc_blank"></div>
+                <div class="cy_wrap">
+                  <div class="city">
+                   <span><a class="active" href="">北京</a></span>
+                   <span><a href="">上海</a></span>
+                   <span><a href="">天津</a></span>
+                   <span><a href="">重庆</a></span>
+                   <span><a href="">河北</a></span>
+                   <span><a href="">山西</a></span>
+                   <span><a href="">河南</a></span>
+                   <span><a href="">辽宁</a></span>
+                   <span><a href="">吉林</a></span>
+                   <span><a href="">黑龙江</a></span>
+                   <span><a href="">内蒙古</a></span>
+                   <span><a href="">江苏</a></span>
+                   <span><a href="">山东</a></span>
+                   <span><a href="">安徽</a></span>
+                   <span><a href="">浙江</a></span>
+                   <span><a href="">福建</a></span>
+                   <span><a href="">湖北</a></span>
+                   <span><a href="">湖南</a></span>
+                   <span><a href="">广东</a></span>
+                   <span><a href="">广西</a></span>
+                   <span><a href="">江西</a></span>
+                   <span><a href="">四川</a></span>
+                   <span><a href="">海南</a></span>
+                   <span><a href="">贵州</a></span>
+                   <span><a href="">云南</a></span>
+                   <span><a href="">西藏</a></span>
+                   <span><a href="">陕西</a></span>
+                   <span><a href="">甘肃</a></span>
+                   <span><a href="">青海</a></span>
+                   <span><a href="">宁夏</a></span>
+                   <span><a href="">新疆</a></span>
+                   <span><a href="">台湾</a></span>
+                   <span><a href="">香港</a></span>
+                   <span><a href="">澳门</a></span>
+                   <span><a href="">钓鱼岛</a></span>
+                   <span><a href="">海外</a></span>
+                  </div>
+                </div>
+             </dd>
+           </li>
+         </ul><!-- 送货 -->
+         <div class="user_en">
+            <a href="" class="login">请登录</a>
+            <a href="" class="regist">注册</a>
+         </div><!-- 登录注册 -->
+         <ul class="moreser">
+           <li>
+              <a href="">我的订单</a>
+           </li>
+           <li class="spacer"></li>
+           <li>
+              <a href="">我的浏览</a>
+           </li>
+           <li class="spacer"></li>
+           <li>
+              <a href="">我的收藏</a>
+           </li>
+           <li class="spacer"></li>
+           <li>
+              <a href="">客户服务</a>
+           </li>
+           <li class="spacer"></li>
+           <li class="act">
+              <dt><a href="">促销活动</a> <i></i></dt>
+              <dd>
+                 <div class="salewrap">
+                    <div class="sale_blank"></div>
+                    <span><a href="">拍卖活动</a></span>
+                    <span><a href="">优惠礼包</a></span>
+                    <span><a href="">批发市场</a></span>
+                    <span><a href="">超值礼包</a></span>
+                 </div>
+              </dd>
+           </li>
+         </ul><!-- 其他服务 -->
+         
+      </div>
+ </div>
+
+ <div class="header clear">
+     <div id="logo">
+       <a href="index.html" target="_bank"><img src="img/logo.gif"/></a>
+     </div>
+    <div  class="h_search">
+        <form class="search_form">
+          <div class="s_change">
+             <i></i>
+             <ul>
+               <li>商品</li>
+               <li class="cur">店铺</li>
+             </ul>
+          </div>
+          <input type="text" name="keywords" placeholder="iphone 7" class="s_input"/>
+          <div class="s_btn">
+            <i></i>
+          </div>
+        </form>
+      </div>
+ </div><!-- 头部 -->
+
+ <div class="contain">
+     <div class="con_head">
+        <div class="ch_logo">
+            <em></em>
+            <span>购物车( <i class="ch_num">1</i> )</span>     
+        </div>
+        <div class="ch_area">
+            <span class="ch_w">配送至：</span>
+            <div class="song">
+                <div class="song_nav">
+                   <span class="songzhi"> 北京 北京昌平区</span>
+                   <i></i>
+                </div>
+                <div class="song_lay"></div>
+            </div>
+        </div>
+     </div>
+     <div class="con_goods">
+        <div class="goods_t">
+          <ul>
+             <li class="qx">
+                <i class="check"></i>
+                全选
+             </li>
+             <li class="sp">商品</li>
+             <li class="sx">属性</li>
+             <li class="dj">单价(元)</li>
+             <li class="sl">数量</li>
+             <li class="xj">小计(元)</li>
+             <li class="cz">操作</li>
+          </ul>
+        </div>
+       <div class="goods_list">
+         <ul>
+            <li class="item">
+              <div class="shop">
+                  <i></i>
+                  <h3>闪猫商城</h3>
+              </div>
+             <!--  <div class="goods clear">
+                 <div class="g_goods">
+                     <i></i>
+                     <div class="goods_meg">
+                       <div class="g_img">
+                          <a href="#"><img src="img/519_G_1457130960742.jpg"/></a>
+                       </div>
+                        <div class="g_name"><a href="#">乐视超级电视 第3代X40（X3-40）40英寸2D智能LED液晶电视(L403PN或L403SN或L403IN)</a></div>
+                     </div> 
+                  </div>
+                  <div class="g_price">
+                      <span class="gp"><em>￥</em>3166.00</span>
+                  </div>
+                  <div class="g_num">
+                      <div class="g_suan">
+                         <a class="prv" href="jacascript:;"> - </a>
+                         <input class="text" type="text" value="1"/>
+                          <a class="next" href="jacascript:;"> + </a>
+                      </div>
+                      <div class="yh">有货</div>
+                  </div>
+                  <div class="g_sum"> 
+                     <span class="gs"><em>￥</em>3469.00</span>
+                  </div>
+                  <div class="g_hand">
+                     <a class="remove" href="javascript:;">删除</a>
+                     <a class="moveto" href="javascript:;">移动到我的收藏</a>
+                  </div>
+             </div> -->
+             </li>
+          </ul>
+       </div>
+       <div class="con_cart">
+          <div class="cart_zz">
+            <i></i>
+            <span>全选</span>
+            <ul>
+               <li><a class="con_del" href="#">删除选中的产品</a></li>
+               <li><a class="con_move" href="#">移到我的收藏</a></li>
+            </ul>
+          </div>
+          <div class="cart_js">
+            <div class="js">
+                <a class="account" href="success.html">去结算</a>
+            </div>
+            <div class="zj">
+                <span class="zj_yf">总价(不含运费)：</span>
+                <span class="zj_cash"><em>￥</em>3469.00</span>
+            </div>
+            <div class="zs">
+                <span class="zs_yf">已节省：</span>
+                <span class="zj_save"><em></em>0.00</span>
+            </div>
+            <div class="choose">
+               <span>已选择<em class="c_num"> 1 </em>件商品</span>
+            </div>
+          </div>
+       </div>
+     </div>
+     <div class="con_more">
+        <div class="more_nav">
+            <ul>
+               <li class="on">最近浏览</li>
+               <li>猜你喜欢</li>
+               <li>掌柜推荐</li>
+            </ul>
+        </div>
+        <div class="more_com">
+           <div class="more_time1">
+              <div class="c_list">
+                   <div class="cl_con">
+                     <div class="cl_wrap">
+                         <ul>
+                           <li>
+                               <div class="cl_item">
+                                  <div class="cl_img">
+                                    <a href="#"><img src="img/520_thumb_G_1457131021794.jpg"/></a>
+                                  </div>
+                                  <div class="cl_price">
+                                       <em>￥</em>3000.00
+                                  </div>
+                                  <div  class="cl_name">
+                                      <a href="#">乐视超级电视 第3代X40（X3-40）40英寸2D智能LED液晶电视(L403PN或L403SN或L403IN)</a>
+                                  </div>
+                                  <div  class="cl_seller">
+                                     <a href="#">闪猫商城</a>
+                                  </div>
+                                  <div  class="cl_num">销量：0</div>
+                               </div>
+                           </li>
+                         </ul>
+                     </div>
+                   </div>
+                   <a class="c_prev" href="javascript:;"></a>
+                   <a class="c_next" href="javascript:;"></a>
+              </div>
+           </div>
+            <div class="more_time2" style="display:none;">
+              <div class="c_list">
+                   <div class="cl_con">
+                     <div class="cl_wrap">
+                         <ul>
+                           <li>
+                               <div class="cl_item">
+                                  <div class="cl_img">
+                                    <a href="#"><img src="img/520_thumb_G_1457131021794.jpg"/></a>
+                                  </div>
+                                  <div class="cl_price">
+                                       <em>￥</em>3000.00
+                                  </div>
+                                  <div  class="cl_name">
+                                      <a href="#">乐视超级电视 第3代X40（X3-40）40英寸2D智能LED液晶电视(L403PN或L403SN或L403IN)</a>
+                                  </div>
+                                  <div  class="cl_seller">
+                                     <a href="#">闪猫商城</a>
+                                  </div>
+                                  <div  class="cl_num">销量：0</div>
+                               </div>
+                           </li>
+                         </ul>
+                     </div>
+                   </div>
+                   <a class="c_prev" href="javascript:;"></a>
+                   <a class="c_next" href="javascript:;"></a>
+              </div>
+           </div>
+            <div class="more_time3" style="display:none;">
+              <div class="c_list">
+                   <div class="cl_con">
+                     <div class="cl_wrap">
+                         <ul>
+                           <li>
+                               <div class="cl_item">
+                                  <div class="cl_img">
+                                    <a href="#"><img src="img/520_thumb_G_1457131021794.jpg"/></a>
+                                  </div>
+                                  <div class="cl_price">
+                                       <em>￥</em>3000.00
+                                  </div>
+                                  <div  class="cl_name">
+                                      <a href="#">乐视超级电视 第3代X40（X3-40）40英寸2D智能LED液晶电视(L403PN或L403SN或L403IN)</a>
+                                  </div>
+                                  <div  class="cl_seller">
+                                     <a href="#">闪猫商城</a>
+                                  </div>
+                                  <div  class="cl_num">销量：0</div>
+                               </div>
+                           </li>
+                         </ul>
+                     </div>
+                   </div>
+                   <a class="c_prev" href="javascript:;"></a>
+                   <a class="c_next" href="javascript:;"></a>
+              </div>
+           </div>
+        </div>
+     </div>
+ </div>
+
+ <div id="footer">
+        <div class="footer_desc_copyright">
+         <p>
+             <a href="">首页</a>
+              |
+           <a href="">隐私保护</a>
+          |
+           <a href="">联系我们</a>
+           |
+           <a href="">免责保护</a>
+            |
+           <a href="">公司简介</a>
+           |
+           <a href="">商家入驻</a>
+            |
+           <a href="">意见反馈</a>
+         </p>
+          <p>
+             <a href="">模板堂</a>
+          |
+           <a href="">ECjia</a>
+           |
+           <a href="">ECjia</a>
+           |
+           <a href="">电商学院</a>
+           |
+           <a href="">ecshop模板堂</a>
+           |
+           <a href="">ECjia</a>
+           |
+           <a href="">ECjia</a>
+          |
+             <a href="">大商创</a>
+         </p>
+         <p>ICP备案证书号:<a href="">DSC000001</a></p>
+         <p class="footer_from">Powered by <a href=""><span>大商创1.0</span></a></p>
+         <p class="footer_img">
+            <a href=""><img src="img/banquan_1.jpg"/></a>
+            <a href=""><img src="img/banquan_2.jpg"/></a>
+            <a href=""><img src="img/banquan_3.jpg"/></a>
+            <a href=""><img src="img/banquan_4.jpg"/></a>
+            <a href=""><img src="img/banquan_5.jpg"/></a>
+         </p>
+        </div>
+     </div><!-- 底部 -->
+</body>
+</html>
